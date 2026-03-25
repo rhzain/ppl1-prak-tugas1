@@ -2,19 +2,19 @@ const express = require('express');
 const cors = require('cors');
 const todoRoutes = require('./routes/todoRoutes');
 
+const path = require('path');
+
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
+// Serve frontend
+app.use(express.static(path.join(__dirname, '..', 'public')));
+
 // Routes
 app.use('/todos', todoRoutes);
-
-// Health check
-app.get('/', (req, res) => {
-  res.json({ success: true, message: 'Todo API is running' });
-});
 
 // 404 handler
 app.use((req, res) => {
